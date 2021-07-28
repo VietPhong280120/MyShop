@@ -2,4 +2,4 @@
 # Technlogies
 	-ASP.net core MVC 5
 	-Entity Framework core 
-#Packages 
+# Packages 
