@@ -23,5 +23,6 @@ namespace MyShop.Data.Entities
         public Product Product { get; set; }
 
         public Language Language { get; set; }
+
     }
 }
