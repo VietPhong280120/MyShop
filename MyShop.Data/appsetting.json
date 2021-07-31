@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "MyShopDatabase": "Server=DESKTOP-RNJP34L\\SQLEXPRESS;Database=MyShop;Trusted_Connection=True;"
+  }
+}
