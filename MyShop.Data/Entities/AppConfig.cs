@@ -8,7 +8,7 @@ namespace MyShop.Data.Entities
 {
     public class AppConfig
     {
-        public int Key { get; set; }
-        public int Value { get; set; }
+        public String Key { get; set; }
+        public String Value { get; set; }
     }
 }
