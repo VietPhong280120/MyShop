@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyShop.Data.EF;
 
 namespace MyShop.Data.Migrations
 {
     [DbContext(typeof(MyShopDBcontext))]
-    partial class MyShopDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20210801025728_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,7 +296,7 @@ namespace MyShop.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 8, 1, 9, 59, 26, 645, DateTimeKind.Local).AddTicks(741));
+                        .HasDefaultValue(new DateTime(2021, 8, 1, 9, 57, 27, 210, DateTimeKind.Local).AddTicks(5217));
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -388,7 +390,7 @@ namespace MyShop.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 8, 1, 9, 59, 26, 663, DateTimeKind.Local).AddTicks(9348),
+                            DateCreated = new DateTime(2021, 8, 1, 9, 57, 27, 228, DateTimeKind.Local).AddTicks(3809),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
