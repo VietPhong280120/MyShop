@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.ViewModels.Catalog.Products.Public
+namespace MyShop.ViewModels.Catalog.Products
 {
-    public class GetProductPagingRequests : PagingRequestBase
+    public class GetPublicProductPagingRequests : PagingRequestBase
     {
         public int? CategoryId { get; set; }
     }

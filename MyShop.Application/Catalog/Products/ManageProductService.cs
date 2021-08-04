@@ -5,7 +5,6 @@ using MyShop.Data.EF;
 using MyShop.Data.Entities;
 using MyShop.Utilities.Exceptions;
 using MyShop.ViewModels.Catalog.Products;
-using MyShop.ViewModels.Catalog.Products.Manage;
 using MyShop.ViewModels.Common;
 using System;
 using System.Collections.Generic;
@@ -96,7 +95,7 @@ namespace MyShop.Application.Catalog.Products
         }
 
 
-        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request)
+        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             //select
             var query = from p in _context.Products

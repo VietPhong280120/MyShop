@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.ViewModels.Catalog.Products.Manage
+namespace MyShop.ViewModels.Catalog.Products
 {
     public interface ProductUpdateRequest
     {
