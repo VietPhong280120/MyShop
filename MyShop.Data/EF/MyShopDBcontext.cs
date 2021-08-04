@@ -14,9 +14,9 @@ namespace MyShop.Data.EF
 {
     public class MyShopDBcontext : IdentityDbContext
     {
-        public MyShopDBcontext( DbContextOptions options) : base(options)
+        public MyShopDBcontext(DbContextOptions options) : base(options)
         {
-            
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,16 +36,13 @@ namespace MyShop.Data.EF
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
-            // modelBuilder.Entity<IdentityUserLogin<String>>().ToTable("AppUserLoginss").HasKey(x => new { x.UserId });
-            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => new{ x.UserId});
-         // modelBuilder.Entity<IdentityUserRole<String>>().ToTable("AppUserRoless").HasKey(x => new { x.UserId, x.RoleId });
-           modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => new { x.UserId });
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
-           // modelBuilder.Entity<IdentityUserToken<String>>().ToTable("AppUserTokenss").HasKey(x => x.UserId);
-           modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
             //Data seeding 
             modelBuilder.Seed();
@@ -61,5 +58,6 @@ namespace MyShop.Data.EF
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }
