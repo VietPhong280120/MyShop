@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.ViewModels.Catalog.Products
 {
-    public interface ProductCreateRequest
+    public class ProductCreateRequest
     {
         public decimal Price { get; set; }
         public decimal OriginalPrice { set; get; }
