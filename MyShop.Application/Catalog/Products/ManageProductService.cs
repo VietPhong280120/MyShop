@@ -4,6 +4,7 @@ using MyShop.Application.Common;
 using MyShop.Data.EF;
 using MyShop.Data.Entities;
 using MyShop.Utilities.Exceptions;
+using MyShop.ViewModels.Catalog.ProducImages;
 using MyShop.ViewModels.Catalog.Products;
 using MyShop.ViewModels.Common;
 using System;
@@ -19,15 +20,31 @@ namespace MyShop.Application.Catalog.Products
     {
         private readonly MyShopDBcontext _context;
         private readonly IStorageService _storageService;
+
         public ManageProductService(MyShopDBcontext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
         }
 
-        public Task<int> AddImages(int productId, List<IFormFile> files)
+        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = new ProductImage()
+            {
+                Caption = request.Caption,
+                DateCreated = DateTime.Now,
+                IsDefault = request.IsDefault,
+                ProductId = productId,
+                SortOder = request.SortOder,
+            };
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.ProductImages.Add(productImage);
+            await _context.SaveChangesAsync();
+            return productImage.Id;
         }
 
         public async Task AddViewCount(int productId)
@@ -95,7 +112,6 @@ namespace MyShop.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-
         public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             //select
@@ -132,16 +148,14 @@ namespace MyShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount
-
                 }).ToListAsync();
-            //select and project 
+            //select and project
             var pagedResult = new PageResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
                 Items = data
             };
             return pagedResult;
-
         }
 
         public async Task<ProductViewModel> GetById(int productId, string languageId)
@@ -165,17 +179,51 @@ namespace MyShop.Application.Catalog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount
             };
-            return productViewModel ; 
+            return productViewModel;
         }
 
-        public Task<List<ProductImageViewModel>> GetListImage(int productId)
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
         {
-            throw new NotImplementedException();
+            var image = await _context.ProductImages.FindAsync(imageId);
+            if (image == null)
+                throw new MyShopException($"Cannot find an image with id = {imageId}");
+            var viewModel = new ProductImageViewModel()
+            {
+                Caption = image.Caption,
+                DateCreated = image.DateCreated,
+                FileSize = image.FileSize,
+                Id = image.Id,
+                ImagePath = image.ImagePath,
+                IsDefault = image.IsDefault,
+                ProductId = image.ProductId,
+                SortOder = image.SortOder
+            };
+            return viewModel;
         }
 
-        public Task<int> RemoveImages(int imageId)
+        public async Task<List<ProductImageViewModel>> GetListImage(int productId)
         {
-            throw new NotImplementedException();
+            return await _context.ProductImages.Where(x => x.ProductId == productId)
+                .Select(i => new ProductImageViewModel()
+                {
+                    Caption = i.Caption,
+                    DateCreated = i.DateCreated,
+                    FileSize = i.FileSize,
+                    Id = i.Id,
+                    ImagePath = i.ImagePath,
+                    IsDefault = i.IsDefault,
+                    ProductId = i.ProductId,
+                    SortOder = i.SortOder
+                }).ToListAsync();
+        }
+
+        public async Task<int> RemoveImage(int imageId)
+        {
+            var productImange = await _context.ProductImages.FindAsync(imageId);
+            if (productImange == null)
+                throw new MyShopException($"Cannot find an image with id = {imageId}");
+            _context.ProductImages.Remove(productImange);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> Update(ProductUpdateRequest request)
@@ -203,12 +251,20 @@ namespace MyShop.Application.Catalog.Products
                 }
             }
             return await _context.SaveChangesAsync();
-
         }
 
-        public Task<int> UpdateImage(int imageId, string caption, bool isDefault)
+        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if (productImage == null)
+                throw new MyShopException($"Cannot find an image with id = {imageId}");
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.ProductImages.Add(productImage);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<bool> UpdatePrice(int productId, decimal newPrice)
@@ -228,6 +284,7 @@ namespace MyShop.Application.Catalog.Products
             product.Stock = addQuantity;
             return await _context.SaveChangesAsync() > 0;
         }
+
         private async Task<string> SaveFile(IFormFile file)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');

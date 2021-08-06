@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.ViewModels.Catalog.Products
 {
-    public interface ProductUpdateRequest
+    public class ProductUpdateRequest
     {
         public int Id { get; set; }
         public string Name { set; get; }
@@ -19,6 +19,5 @@ namespace MyShop.ViewModels.Catalog.Products
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
         public IFormFile ThumbnailImage { get; set; }
-
     }
 }
