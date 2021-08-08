@@ -12,15 +12,14 @@ using System.Threading.Tasks;
 
 namespace MyShop.Data.EF
 {
-    public class MyShopDBcontext : IdentityDbContext
+    public class MyShopDBcontext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public MyShopDBcontext(DbContextOptions options) : base(options)
         {
-
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
             //Configure using fluent api
             modelBuilder.ApplyConfiguration(new CartConfiguration());
@@ -42,11 +41,13 @@ namespace MyShop.Data.EF
             modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => new { x.UserId });
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
-            //Data seeding 
+            //Data seeding
             modelBuilder.Seed();
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
