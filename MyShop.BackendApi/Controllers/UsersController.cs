@@ -24,23 +24,23 @@ namespace MyShop.BackendApi.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var resultToken = await _userServices.Authencate(request);
+            var resultToken = await _userServices.Authenticate(request);
             if (string.IsNullOrEmpty(resultToken))
             {
                 return BadRequest("User name or password is in correct");
             }
-            return Ok(new { token = resultToken });
+            return Ok(resultToken);
         }
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var result = await _userServices.Register(request);
             if (!result)

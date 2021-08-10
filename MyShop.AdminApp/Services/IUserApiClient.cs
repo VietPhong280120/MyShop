@@ -2,15 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.Application.System.Users
+namespace MyShop.AdminApp.Services
 {
-    public interface IUserServices
+    public interface IUserApiClient
     {
         Task<string> Authenticate(LoginRequest request);
-
-        Task<bool> Register(RegisterRequest register);
     }
 }
