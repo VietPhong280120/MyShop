@@ -1,4 +1,5 @@
-﻿using MyShop.ViewModels.System.Users;
+﻿using MyShop.ViewModels.Common;
+using MyShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace MyShop.Application.System.Users
         Task<string> Authenticate(LoginRequest request);
 
         Task<bool> Register(RegisterRequest register);
+
+        Task<PageResult<UserVm>> GetUsersPaging(GetUserPagingRequest request);
     }
 }
