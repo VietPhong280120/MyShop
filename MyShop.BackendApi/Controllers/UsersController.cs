@@ -27,36 +27,60 @@ namespace MyShop.BackendApi.Controllers
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-            var resultToken = await _userServices.Authenticate(request);
-            if (string.IsNullOrEmpty(resultToken))
-            {
-                return BadRequest("User name or password is in correct");
-            }
 
-            return Ok(resultToken);
+            var result = await _userServices.Authenticate(request);
+
+            if (string.IsNullOrEmpty(result.ResultObj))
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var result = await _userServices.Register(request);
-            if (!result)
+            if (!result.IsSuccessed)
             {
-                return BadRequest("Register is unsuccessull");
+                return BadRequest(result);
             }
-            return Ok();
+            return Ok(result);
+        }
+
+        //PUT: http://localhost/api/users/id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userServices.Update(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
         //http://localhost/api/user/paging?pageindex=1&pageSize=10&kewword=
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPading([FromQuery] GetUserPagingRequest request)
         {
-            var product = await _userServices.GetUsersPaging(request);
-            return Ok(product);
+            var user = await _userServices.GetUsersPaging(request);
+            return Ok(user);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var user = await _userServices.GetById(id);
+            return Ok(user);
         }
     }
 }
