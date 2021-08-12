@@ -10,10 +10,14 @@ namespace MyShop.Application.System.Users
 {
     public interface IUserServices
     {
-        Task<string> Authenticate(LoginRequest request);
+        Task<ApiResult<string>> Authenticate(LoginRequest request);
 
-        Task<bool> Register(RegisterRequest register);
+        Task<ApiResult<bool>> Register(RegisterRequest register);
 
-        Task<PageResult<UserVm>> GetUsersPaging(GetUserPagingRequest request);
+        Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
+
+        Task<ApiResult<UserVm>> GetById(Guid id);
+
+        Task<ApiResult<PageResult<UserVm>>> GetUsersPaging(GetUserPagingRequest request);
     }
 }
