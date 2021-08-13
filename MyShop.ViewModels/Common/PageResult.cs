@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyShop.ViewModels.Common
 {
-    public class PageResult<ProductViewModel>
+    public class PageResult<ProductViewModel> : PageResultBase
     {
         public List<ProductViewModel> Items { set; get; }
-        public int TotalRecord { set; get; }
     }
 }
