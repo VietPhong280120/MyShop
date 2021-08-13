@@ -34,7 +34,7 @@ namespace MyShop.Application.System.Users
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return null;
+            if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
@@ -61,6 +61,19 @@ namespace MyShop.Application.System.Users
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User không tồn tại");
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa không thành công");
+        }
+
         public async Task<ApiResult<UserVm>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -75,7 +88,8 @@ namespace MyShop.Application.System.Users
                 FirstName = user.FirstName,
                 Dob = user.Dob,
                 Id = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
@@ -108,6 +122,8 @@ namespace MyShop.Application.System.Users
             var pagedResult = new PageResult<UserVm>()
             {
                 TotalRecord = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
                 Items = data
             };
             return new ApiSuccessResult<PageResult<UserVm>>(pagedResult);
