@@ -18,5 +18,7 @@ namespace MyShop.ViewModels.System.Users
 
         [Display(Name = "Date of birth")]
         public DateTime Dob { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }

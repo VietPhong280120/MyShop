@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using MyShop.ViewModels.System.Users;
+using MyShop.Application.System.Roles;
 
 namespace MyShop.BackendApi
 {
@@ -50,7 +51,7 @@ namespace MyShop.BackendApi
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserServices, UserServices>();
-
+            services.AddTransient<IRoleServices, RoleServices>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 

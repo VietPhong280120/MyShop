@@ -21,5 +21,7 @@ namespace MyShop.Application.System.Users
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<PageResult<UserVm>>> GetUsersPaging(GetUserPagingRequest request);
+
+        Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
     }
 }

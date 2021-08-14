@@ -24,7 +24,7 @@ namespace MyShop.ViewModels.System.Users
                 .MinimumLength(6).WithMessage("Password is at 6 characters");
             RuleFor(x => x).Custom((request, context) =>
             {
-                if (request.Password == request.ConfirmPassword)
+                if (request.Password != request.ConfirmPassword)
                 {
                     context.AddFailure("Confirm password is not match");
                 }
