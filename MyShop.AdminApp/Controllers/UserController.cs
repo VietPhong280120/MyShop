@@ -127,7 +127,7 @@ namespace MyShop.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
             return View(new UserDeleteRequest()
             {
