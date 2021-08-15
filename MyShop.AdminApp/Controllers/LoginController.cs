@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyShop.AdminApp.Services;
+using MyShop.Utilities.Constants;
 using MyShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,9 @@ namespace MyShop.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-            HttpContext.Session.SetString("Token", result.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.Appsetting.DefaultLanguageId,
+                _configuration[SystemConstants.Appsetting.DefaultLanguageId]);
+            HttpContext.Session.SetString(SystemConstants.Appsetting.Token, result.ResultObj);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
