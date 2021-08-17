@@ -112,20 +112,21 @@ namespace MyShop.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
+        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequests request)
         {
             //select
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
+                        where pt.LanguageId == request.LanguageId
                         select new { p, pt, pic };
             //filter
             if (!String.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            if (request.CategoryIds.Count > 0)
+            if (request.CategoryIds != null && request.CategoryIds.Count > 0)
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
             }
