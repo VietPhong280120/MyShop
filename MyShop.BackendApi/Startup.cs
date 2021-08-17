@@ -54,6 +54,7 @@ namespace MyShop.BackendApi
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IRoleServices, RoleServices>();
             services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<IProductService, ProductService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 

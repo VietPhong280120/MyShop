@@ -23,7 +23,7 @@ namespace MyShop.Application.Catalog.Products
 
         Task AddViewCount(int productId);
 
-        Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequests request);
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
