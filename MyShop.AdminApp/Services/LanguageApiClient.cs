@@ -23,7 +23,7 @@ namespace MyShop.AdminApp.Services
 
         public async Task<ApiResult<List<LanguageVm>>> GetAll()
         {
-            return await GetAsync<ApiErrorResult<List<LanguageVm>>>("/api/languages");
+            return await GetAsync<ApiResult<List<LanguageVm>>>("/api/languages");
         }
     }
 }

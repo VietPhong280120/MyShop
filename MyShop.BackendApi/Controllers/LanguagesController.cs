@@ -22,14 +22,11 @@ namespace MyShop.BackendApi.Controllers
             _languageService = languageService;
         }
 
-        //PUBLIC
-
-        //http://localhost/port/product/products/products?pageIndex=1&pagesize=10
         [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
-            ApiResult<List<LanguageVm>> language = await _languageService.GetAll();
-            return Ok(language);
+            var languages = await _languageService.GetAll();
+            return Ok(languages);
         }
     }
 }

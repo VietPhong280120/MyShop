@@ -64,10 +64,11 @@ namespace MyShop.AdminApp.Services
 
         public async Task<PageResult<ProductVm>> GetPagings(GetManageProductPagingRequests request)
         {
-            var data = await GetAsync<PageResult<ProductVm>>($"/api/products/paging?pageIndex={request.PageIndex}" +
-                $"&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}" +
-                $"&languageId={request.LanguageId}");
+            var data = await GetAsync<PageResult<ProductVm>>(
+                 $"/api/products/paging?pageIndex={request.PageIndex}" +
+                 $"&pageSize={request.PageSize}" +
+                 $"&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
+
             return data;
         }
     }

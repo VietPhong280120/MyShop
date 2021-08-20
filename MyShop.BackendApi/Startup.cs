@@ -24,6 +24,7 @@ using FluentValidation;
 using MyShop.ViewModels.System.Users;
 using MyShop.Application.System.Roles;
 using MyShop.Application.System.Language;
+using MyShop.Application.Catalog.Categories;
 
 namespace MyShop.BackendApi
 {
@@ -47,18 +48,24 @@ namespace MyShop.BackendApi
 
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
+
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IRoleServices, RoleServices>();
-            services.AddTransient<ILanguageService, LanguageService>();
-            services.AddTransient<IProductService, ProductService>();
+
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
-            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+            services.AddControllers().AddFluentValidation(
+                fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger  My Shop ", Version = "v1" });

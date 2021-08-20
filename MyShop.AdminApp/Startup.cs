@@ -38,7 +38,9 @@ namespace MyShop.AdminApp
                 });
 
             services.AddControllersWithViews()
-                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
+            .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -48,6 +50,7 @@ namespace MyShop.AdminApp
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
