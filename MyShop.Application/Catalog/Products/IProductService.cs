@@ -36,5 +36,7 @@ namespace MyShop.Application.Catalog.Products
         Task<List<ProductImageViewModel>> GetListImage(int productId);
 
         Task<PageResult<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequests request);
+
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
     }
 }
