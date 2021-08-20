@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using MyShop.AdminApp.Services;
 using MyShop.Utilities.Constants;
 using MyShop.ViewModels.Catalog.Products;
+using MyShop.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,51 @@ namespace MyShop.AdminApp.Controllers
 
             ModelState.AddModelError("", "Create is unsuccessfull !");
             return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int id)
+        {
+            var categoryAssignRequest = await GetCategoryAssignRequest(id);
+            return View(categoryAssignRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Add category is successful!";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+
+            var categoryAssignRequest = await GetCategoryAssignRequest(request.Id);
+            return View(categoryAssignRequest);
+        }
+
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.Appsetting.DefaultLanguageId);
+
+            var productObj = await _productApiClient.GetById(id, languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var role in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = productObj.Categories.Contains(role.Name)
+                });
+            }
+            return categoryAssignRequest;
         }
     }
 }
