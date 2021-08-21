@@ -34,13 +34,13 @@ namespace MyShop.Data.Extensions
             modelBuilder.Entity<Language>().HasData(
                 new Language()
                 {
-                    Id = "vi-VN",
+                    Id = "vi",
                     Name = "Tiếng Việt",
                     IsDefault = true
                 },
                 new Language()
                 {
-                    Id = "en-US",
+                    Id = "en",
                     Name = "English",
                     IsDefault = false
                 });
@@ -69,7 +69,7 @@ namespace MyShop.Data.Extensions
                       Id = 1,
                       CategoryId = 1,
                       Name = "Áo nam",
-                      LanguageId = "vi-VN",
+                      LanguageId = "vi",
                       SeoAlias = "ao-nam",
                       SeoDescription = "Sản phẩm áo thời trang nam",
                       SeoTitle = "Sản phẩm áo thời trang nam"
@@ -79,7 +79,7 @@ namespace MyShop.Data.Extensions
                       Id = 2,
                       CategoryId = 1,
                       Name = "Men Shirt",
-                      LanguageId = "en-US",
+                      LanguageId = "en",
                       SeoAlias = "men-shirt",
                       SeoDescription = "The shirt products for men",
                       SeoTitle = "The shirt products for men"
@@ -89,7 +89,7 @@ namespace MyShop.Data.Extensions
                       Id = 3,
                       CategoryId = 2,
                       Name = "Áo nữ",
-                      LanguageId = "vi-VN",
+                      LanguageId = "vi",
                       SeoAlias = "ao-nu",
                       SeoDescription = "Sản phẩm áo thời trang nữ",
                       SeoTitle = "Sản phẩm áo thời trang women"
@@ -99,7 +99,7 @@ namespace MyShop.Data.Extensions
                       Id = 4,
                       CategoryId = 2,
                       Name = "Women Shirt",
-                      LanguageId = "en-US",
+                      LanguageId = "en",
                       SeoAlias = "women-shirt",
                       SeoDescription = "The shirt products for women",
                       SeoTitle = "The shirt products for women"
@@ -122,7 +122,7 @@ namespace MyShop.Data.Extensions
                       Id = 1,
                       ProductId = 1,
                       Name = "Áo sơ mi nam trắng Việt Tiến",
-                      LanguageId = "vi-VN",
+                      LanguageId = "vi",
                       SeoAlias = "ao-so-mi-nam-trang-viet-tien",
                       SeoDescription = "Áo sơ mi nam trắng Việt Tiến",
                       SeoTitle = "Áo sơ mi nam trắng Việt Tiến",
@@ -134,7 +134,7 @@ namespace MyShop.Data.Extensions
                       Id = 2,
                       ProductId = 1,
                       Name = "Viet Tien Men T-Shirt",
-                      LanguageId = "en-US",
+                      LanguageId = "en",
                       SeoAlias = "viet-tien-men-t-shirt",
                       SeoDescription = "Viet Tien Men T-Shirt",
                       SeoTitle = "Viet Tien Men T-Shirt",
@@ -168,7 +168,7 @@ namespace MyShop.Data.Extensions
                 Email = "Vietphong2801@gmail.com",
                 NormalizedEmail = "Vietphong2801@gmail.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Phongnguyen079"),
+                PasswordHash = hasher.HashPassword(null, "Phong123@"),
                 SecurityStamp = string.Empty,
                 FirstName = "Phong",
                 LastName = "Viet",
