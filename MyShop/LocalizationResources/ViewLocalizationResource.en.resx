@@ -142,9 +142,9 @@ layout</comment>
     <value>Specials Offer</value>
     <comment>layout</comment>
   </data>
-  <data name="Vietnamese" xml:space="preserve">
+  <data name="Tiếng Việt" xml:space="preserve">
     <value>Vietnamese</value>
     <comment>layout
-layout</comment>
+</comment>
   </data>
 </root>

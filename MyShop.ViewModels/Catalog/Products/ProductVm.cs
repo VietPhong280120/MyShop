@@ -16,6 +16,7 @@ namespace MyShop.ViewModels.Catalog.Products
         public int ViewCount { set; get; }
         public DateTime DateCreated { set; get; }
         public string Name { set; get; }
+        public bool? IsFeatured { get; set; }
         public string Description { set; get; }
         public string Details { set; get; }
         public string SeoDescription { set; get; }

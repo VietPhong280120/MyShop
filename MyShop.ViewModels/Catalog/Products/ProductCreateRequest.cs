@@ -17,6 +17,7 @@ namespace MyShop.ViewModels.Catalog.Products
         [Required(ErrorMessage = "Name is required")]
         public string Name { set; get; }
 
+        public bool? IsFeatured { get; set; }
         public string Description { set; get; }
         public string Details { set; get; }
         public string SeoDescription { set; get; }
