@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using MyShop.ApiIntergration;
 using MyShop.ViewModels.Common;
 using MyShop.ViewModels.System.Languages;
 using Newtonsoft.Json;
@@ -10,7 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace MyShop.AdminApp.Services
+namespace MyShop.ApiIntergration
 {
     public class LanguageApiClient : BaseApiClient, ILanguageApiClient
     {
