@@ -145,6 +145,10 @@ layout</comment>
   <data name="Vietnamese" xml:space="preserve">
     <value>Vietnamese</value>
     <comment>layout
-layout</comment>
+</comment>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+    <comment>/Home/Index</comment>
   </data>
 </root>

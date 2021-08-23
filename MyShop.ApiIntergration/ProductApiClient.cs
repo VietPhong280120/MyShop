@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using MyShop.ApiIntergration;
 using MyShop.Utilities.Constants;
 using MyShop.ViewModels.Catalog.Products;
 using MyShop.ViewModels.Common;
@@ -13,7 +14,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.AdminApp.Services
+namespace MyShop.ApiIntergration
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {
@@ -105,6 +106,13 @@ namespace MyShop.AdminApp.Services
         {
             var data = await GetAsync<ProductVm>(
                  $"/api/products/{id}/{languageId}");
+
+            return data;
+        }
+
+        public async Task<List<ProductVm>> GetFeatureProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductVm>($"/api/products/featured/{languageId}/{take}");
 
             return data;
         }

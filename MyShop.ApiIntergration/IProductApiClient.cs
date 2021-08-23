@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyShop.AdminApp.Services
+namespace MyShop.ApiIntergration
 {
     public interface IProductApiClient
     {
@@ -16,5 +16,7 @@ namespace MyShop.AdminApp.Services
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<ProductVm> GetById(int id, string languageId);
+
+        Task<List<ProductVm>> GetFeatureProducts(string languageId, int take);
     }
 }

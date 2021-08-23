@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyShop.AdminApp.Models;
-using MyShop.AdminApp.Services;
+using MyShop.ApiIntergration;
 using MyShop.Utilities.Constants;
 using System;
 using System.Collections.Generic;

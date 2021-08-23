@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.Data.Entities
 {
-   public class Product
+    public class Product
     {
         public int Id { set; get; }
         public decimal Price { set; get; }
@@ -18,6 +18,7 @@ namespace MyShop.Data.Entities
         public List<ProductInCategory> ProductInCategories { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
+        public bool? IsFeatured { get; set; }
 
         public List<Cart> Carts { get; set; }
 

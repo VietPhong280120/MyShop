@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using MyShop.AdminApp.Services;
+using MyShop.ApiIntergration;
 using MyShop.Utilities.Constants;
 using MyShop.ViewModels.Catalog.Products;
 using MyShop.ViewModels.Common;

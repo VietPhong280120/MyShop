@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using MyShop.AdminApp.Services;
+using MyShop.ApiIntergration;
 using MyShop.Utilities.Constants;
 using MyShop.ViewModels.System.Users;
 using System;

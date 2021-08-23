@@ -38,5 +38,7 @@ namespace MyShop.Application.Catalog.Products
         Task<PageResult<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequests request);
 
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<List<ProductVm>> GetFeatureProducts(string languageId, int take);
     }
 }
