@@ -109,5 +109,12 @@ namespace MyShop.ApiIntergration
 
             return data;
         }
+
+        public async Task<List<ProductVm>> GetFeatureProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductVm>($"/api/products/featured/{languageId}/{take}");
+
+            return data;
+        }
     }
 }

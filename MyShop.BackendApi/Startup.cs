@@ -25,6 +25,7 @@ using MyShop.ViewModels.System.Users;
 using MyShop.Application.System.Roles;
 using MyShop.Application.System.Language;
 using MyShop.Application.Catalog.Categories;
+using MyShop.Application.Utilities.Slides;
 
 namespace MyShop.BackendApi
 {
@@ -56,6 +57,7 @@ namespace MyShop.BackendApi
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<ISlideServices, SlideServices>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IRoleServices, RoleServices>();
 

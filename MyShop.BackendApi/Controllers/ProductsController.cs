@@ -46,6 +46,15 @@ namespace MyShop.BackendApi.Controllers
             return Ok(product);
         }
 
+        [HttpGet("featured/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeatureProducts(int take, string languageId)
+        {
+            var product = await _productService.GetFeatureProducts(languageId, take);
+
+            return Ok(product);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
