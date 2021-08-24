@@ -20,6 +20,7 @@ namespace MyShop.Utilities.Constants
         public class ProductSettings
         {
             public const int NumberOfFeatureProducts = 4;
+            public const int NumberOfLatestProducts = 6;
         }
     }
 }

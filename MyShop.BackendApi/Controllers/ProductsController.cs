@@ -55,6 +55,15 @@ namespace MyShop.BackendApi.Controllers
             return Ok(product);
         }
 
+        [HttpGet("latest/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+        {
+            var product = await _productService.GetLatestProducts(languageId, take);
+
+            return Ok(product);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)

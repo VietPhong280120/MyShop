@@ -38,7 +38,8 @@ namespace MyShop.Controllers
             var viewModel = new HomeViewModel
             {
                 Slides = await _slideApiClient.GetAll(),
-                FeaturedProducts = await _productApiClient.GetFeatureProducts(culture, SystemConstants.ProductSettings.NumberOfFeatureProducts)
+                FeaturedProducts = await _productApiClient.GetFeatureProducts(culture, SystemConstants.ProductSettings.NumberOfFeatureProducts),
+                LatestProducts = await _productApiClient.GetLatestProducts(culture, SystemConstants.ProductSettings.NumberOfLatestProducts)
             };
             return View(viewModel);
         }
