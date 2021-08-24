@@ -116,5 +116,12 @@ namespace MyShop.ApiIntergration
 
             return data;
         }
+
+        public async Task<List<ProductVm>> GetLatestProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductVm>($"/api/products/latest/{languageId}/{take}");
+
+            return data;
+        }
     }
 }
