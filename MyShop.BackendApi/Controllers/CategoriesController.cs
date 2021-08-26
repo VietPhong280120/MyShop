@@ -26,5 +26,12 @@ namespace MyShop.BackendApi.Controllers
             var category = await _categorySevice.GetAll(languageId);
             return Ok(category);
         }
+
+        [HttpGet("{id}/{languageId}")]
+        public async Task<IActionResult> GetById(string languageId, int id)
+        {
+            var category = await _categorySevice.GetById(languageId, id);
+            return Ok(category);
+        }
     }
 }

@@ -18,12 +18,22 @@ namespace MyShop.ViewModels.Catalog.Products
         public string Name { set; get; }
 
         public bool? IsFeatured { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
         public string Description { set; get; }
+
+        [Required(ErrorMessage = "Details is required")]
         public string Details { set; get; }
+
+        [Required(ErrorMessage = "SeoDescription is required")]
         public string SeoDescription { set; get; }
+
+        [Required(ErrorMessage = "SeoTitle is required")]
         public string SeoTitle { set; get; }
 
+        [Required(ErrorMessage = "SeoAlias is required")]
         public string SeoAlias { get; set; }
+
         public string LanguageId { set; get; }
         public IFormFile ThumbnailImage { get; set; }
     }

@@ -73,6 +73,48 @@ namespace MyShop.ApiIntergration
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> UpdateProduct(ProductUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor
+               .HttpContext
+               .Session
+               .GetString(SystemConstants.Appsetting.Token);
+
+            var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Appsetting.DefaultLanguageId);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsetting.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.ThumbnailImage != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
+            }
+
+            requestContent.Add(new StringContent(request.Price.ToString()), "price");
+            requestContent.Add(new StringContent(request.OriginalPrice.ToString()), "originalPrice");
+            requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
+            requestContent.Add(new StringContent(request.Name.ToString()), "name");
+            requestContent.Add(content: new StringContent(request.Description.ToString()), name: "description");
+
+            requestContent.Add(content: new StringContent(request.Details.ToString()), name: "details");
+            requestContent.Add(new StringContent(request.SeoDescription.ToString()), "seoDescription");
+            requestContent.Add(new StringContent(request.SeoTitle.ToString()), "seoTitle");
+            requestContent.Add(new StringContent(request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(languageId), "languageId");
+
+            var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<PageResult<ProductVm>> GetPagings(GetManageProductPagingRequests request)
         {
             var data = await GetAsync<PageResult<ProductVm>>(
