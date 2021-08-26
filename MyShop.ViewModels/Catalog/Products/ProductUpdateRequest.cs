@@ -10,6 +10,9 @@ namespace MyShop.ViewModels.Catalog.Products
     public class ProductUpdateRequest
     {
         public int Id { get; set; }
+        public int Price { get; set; }
+        public int OriginalPrice { get; set; }
+        public int Stock { get; set; }
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }

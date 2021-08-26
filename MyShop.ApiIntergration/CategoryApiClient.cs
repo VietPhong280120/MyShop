@@ -24,5 +24,10 @@ namespace MyShop.ApiIntergration
         {
             return await GetListAsync<CategoryVm>("/api/Categories?languageId=" + languageId);
         }
+
+        public async Task<CategoryVm> GetById(string languageId, int id)
+        {
+            return await GetAsync<CategoryVm>($"/api/categories/{id}/{languageId}");
+        }
     }
 }

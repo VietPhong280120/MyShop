@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyShop.Application.Common;
 using MyShop.Data.EF;
 using MyShop.Data.Entities;
+using MyShop.Utilities.Constants;
 using MyShop.Utilities.Exceptions;
 using MyShop.ViewModels.Catalog.ProducImages;
 using MyShop.ViewModels.Catalog.Products;
@@ -56,6 +57,35 @@ namespace MyShop.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
+            var languages = _context.Languages;
+            var translations = new List<ProductTranslation>();
+            foreach (var language in languages)
+            {
+                if (language.Id == request.LanguageId)
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = request.Name,
+                        Description = request.Description,
+                        Details = request.Details,
+                        SeoDescription = request.SeoDescription,
+                        SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
+                        LanguageId = request.LanguageId
+                    });
+                }
+                else
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        Description = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
             var product = new Product()
             {
                 Price = request.Price,
@@ -63,19 +93,7 @@ namespace MyShop.Application.Catalog.Products
                 Stock = request.Stock,
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
-                ProductTranslations = new List<ProductTranslation>()
-                {
-                    new ProductTranslation()
-                    {
-                        Name = request.Name,
-                        Description=request.Description,
-                        Details = request.Details,
-                        SeoDescription=request.SeoDescription,
-                        SeoAlias=request.SeoAlias,
-                        SeoTitle=request.SeoTitle,
-                        LanguageId=request.LanguageId
-                    }
-                }
+                ProductTranslations = translations
             };
             //Save Image
             if (request.ThumbnailImage != null)
@@ -121,8 +139,10 @@ namespace MyShop.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        where pt.LanguageId == request.LanguageId
-                        select new { p, pt, pic };
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        select new { p, pt, pic, pi };
             //filter
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -151,6 +171,7 @@ namespace MyShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath
                 }).ToListAsync();
             //select and project
             var pagedResult = new PageResult<ProductVm>()

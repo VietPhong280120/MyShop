@@ -83,6 +83,45 @@ namespace MyShop.AdminApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.Appsetting.DefaultLanguageId);
+            var product = await _productApiClient.GetById(id, languageId);
+            var editVm = new ProductUpdateRequest()
+            {
+                Id = product.Id,
+                Price = (int)product.Price,
+                OriginalPrice = (int)product.OriginalPrice,
+                Stock = product.Stock,
+                Name = product.Name,
+                Description = product.Description,
+                Details = product.Details,
+                SeoDescription = product.SeoDescription,
+                SeoAlias = product.SeoAlias,
+                SeoTitle = product.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Update is successful !";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Update is unsuccessfull !");
+            return View(request);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> CategoryAssign(int id)
         {
             var categoryAssignRequest = await GetCategoryAssignRequest(id);

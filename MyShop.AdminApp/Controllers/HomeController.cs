@@ -42,7 +42,7 @@ namespace MyShop.AdminApp.Controllers
         public IActionResult Language(NavigationViewModel viewModel)
         {
             HttpContext.Session.SetString(SystemConstants.Appsetting.DefaultLanguageId, viewModel.CurrentLanguageId);
-            return RedirectToAction("Index");
+            return Redirect(viewModel.ReturnUrl);
         }
     }
 }
