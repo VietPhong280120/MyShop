@@ -165,5 +165,31 @@ namespace MyShop.AdminApp.Controllers
             }
             return categoryAssignRequest;
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new ProductDeleteRequest()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.DeleteProduct(request.Id);
+            if (result)
+            {
+                TempData["result"] = "Delete is successful !";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Delete is unsuccessfull !");
+            return View(request);
+        }
     }
 }
