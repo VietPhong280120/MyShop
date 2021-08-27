@@ -165,5 +165,10 @@ namespace MyShop.ApiIntergration
 
             return data;
         }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            return await Delete($"/api/products/" + id);
+        }
     }
 }

@@ -3,7 +3,7 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration configuration;
 @{
     var culture = CultureInfo.CurrentCulture;
-    ViewData["Title"] = Model.Category.Name + (Model.Product.PageIndex == 1 ? "" : "-" + _loc["Page"] + " " + Model.Product.PageIndex);
+    ViewData["Title"] = Model.Category.Name + (Model.Product.PageIndex == 1 ? "" : " - " + _loc["Page"] + " " + Model.Product.PageIndex);
     ViewData["Description"] = Model.Category.Name + (Model.Product.PageIndex == 1 ? "" : "-" + _loc["Page"] + " " + Model.Product.PageIndex);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -42,7 +42,7 @@
             var item = Model.Product.Items[i];
             <div class="row">
                 <div class="span2">
-                    <img src="(@configuration["BaseAddress"]+@item.ThumbnailImage)" alt="@item.Name" />
+                    <img src="@(configuration["BaseAddress"]+@item.ThumbnailImage)" alt="@item.Name" />
                 </div>
                 <div class="span4">
                     <h3><localize>New | Available</localize></h3>
@@ -77,7 +77,7 @@
                 var item = Model.Product.Items[i];
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="/@culture.Name/@_loc["categoryUrl"]/@item.Id"><img src="(@configuration["BaseAddress"]+@item.ThumbnailImage)" alt="" /></a>
+                        <a href="/@culture.Name/@_loc["categoryUrl"]/@item.Id"><img src="@(configuration["BaseAddress"]+@item.ThumbnailImage)" alt="" /></a>
                         <div class="caption">
                             <h5>@item.Name</h5>
                             <p>
@@ -100,5 +100,5 @@
 </div>
 
 <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
-@await Component.InvokeAsync("Pager", Model)
+@await Component.InvokeAsync("Pager", Model.Product)
 <br class="clr" />
