@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyShop.ApiIntergration;
+using MyShop.ViewModels.System.Users;
 using MyShop.WebApp.LocalizationResources;
 using System;
 using System.Collections.Generic;
@@ -37,7 +39,6 @@ namespace MyShop
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/User/Forbidden/";
                 });
-            services.AddControllersWithViews();
             var cultures = new[]
           {
                 new CultureInfo("en"),
@@ -45,6 +46,7 @@ namespace MyShop
             };
 
             services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
                     // When using all the culture providers, the localization process will

@@ -31,10 +31,12 @@
                                         <div class="form-floating mb-3">
                                             <input class="form-control" asp-for="UserName" type="text" placeholder="Enter your user name " />
                                             <label for="inputEmail">User Name</label>
+                                            <div asp-validation-for="UserName" class="text-error"></div>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" asp-for="Password" type="password" placeholder="Password" />
                                             <label for="inputPassword">Password</label>
+                                            <div asp-validation-for="Password" class="text-error"></div>
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" asp-for="RememberMe" type="checkbox" value="" />
