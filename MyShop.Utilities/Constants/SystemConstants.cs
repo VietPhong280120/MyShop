@@ -9,6 +9,7 @@ namespace MyShop.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConnectionString = "MyShopDatabase";
+        public const string CartSession = "CartSession";
 
         public class Appsetting
         {
